@@ -17,7 +17,7 @@ jobs:
     run:
       shell: bash
   steps:
-  - name: Checkouta
+  - name: Checkout
     uses: hashicorp/checkout@v2
 
   - name: Setup Terraform
