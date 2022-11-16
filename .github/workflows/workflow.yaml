@@ -3,38 +3,40 @@ name: 'Terraform CI'
 on:
   push:
     branches:
-    - main
+      - main
     paths:
       - '**.tf'
-pull_request:
+  pull_request:
 
 jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
 
-  defaults:
-    run:
-      shell: bash
-  steps:
-  - name: Checkout
-    uses: hashicorp/checkout@v2
+    defaults:
+      run:
+        shell: bash
 
-  - name: Setup Terraform
-    uses: hashicorp/setup-terraform@v1
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: hashicorp/checkout@v2
 
-  - name: Terraform Init
-    run: terraform init
-    env:
-      GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+
+    - name: Terraform Init
+      run: terraform init
+      env:
+        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
   
-  - name: Terraform Plan
-    run:  terraform plan -lock=false
-    env:
-      GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+    - name: Terraform Plan
+      run:  terraform plan -lock=false
+      env:
+        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-  - name: Terrraform Applay
-    if:  github.ref == 'refs/heads/main' && github.event_name  == 'push'
-    run:  terraform apply -auto-approve
-    env:
-      GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+    - name: Terrraform Applay
+      if:  github.ref == 'refs/heads/main' && github.event_name  == 'push'
+      run:  terraform apply -auto-approve
+      env:
+        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
