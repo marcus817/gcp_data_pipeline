@@ -45,7 +45,7 @@ module "bigquery-dataset-gasolina" {
       clustering  = ["produto", "regiao_sigla","estado_sigla"],
       labels = {
         name = "stack_data_pipeline"
-        project = gasolina
+        project = "gasolina"
       },
       deletion_protection = true
       schema = file("./bigquery/schema/gasolina_brasil/tb_historico_combustivel_brasil.json")
