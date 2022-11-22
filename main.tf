@@ -70,7 +70,7 @@ module "bucket-curated" {
 }
 
 module "bucket-pyspark-tmp" {
-  source = "./module/gcs"
+  source = "./modules/gcs"
 
   name  = "msgcp-stack-data-pipeline-stack-combustiveis-brasil-pyspark-tmp"
   project_id = var.project_id
